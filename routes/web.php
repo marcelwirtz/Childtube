@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/playlist', 'PlaylistController@index')->name('playlist.index')->middleware('auth');
-Route::get('/playlist/{playlist}/{pageToken?}', 'PlaylistController@show')->name('playlist.show');
+Route::get('/playlist/show/{playlist}/{pageToken?}', 'PlaylistController@show')->name('playlist.show');
 Route::get('/playlist/create', 'PlaylistController@create')->name('playlist.create')->middleware('auth');
 Route::get('/playlist/{playlist}/delete', 'PlaylistController@destroy')->name('playlist.delete')->middleware('auth');
 Route::post('/playlist', 'PlaylistController@store')->name('playlist.store')->middleware('auth');

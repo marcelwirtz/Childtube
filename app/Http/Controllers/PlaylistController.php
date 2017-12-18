@@ -43,9 +43,9 @@ class PlaylistController extends Controller
                 'name' => $yt_playlist->snippet->title,
                 'playlist_id' => $request->playlist_id,
                 'number_of_videos' => $playlistItems['info']['totalResults'],
-                'thumbnail_path' => $yt_playlist->snippet->thumbnails->standard->url,
-                'thumbnail_width' => $yt_playlist->snippet->thumbnails->standard->width,
-                'thumbnail_height' => $yt_playlist->snippet->thumbnails->standard->height,
+                'thumbnail_path' => isset($yt_playlist->snippet->thumbnails->standard->url) ? $yt_playlist->snippet->thumbnails->standard->url : $yt_playlist->snippet->thumbnails->default->url,
+                'thumbnail_width' => isset($yt_playlist->snippet->thumbnails->standard->width) ? $yt_playlist->snippet->thumbnails->standard->width : $yt_playlist->snippet->thumbnails->default->width,
+                'thumbnail_height' => isset($yt_playlist->snippet->thumbnails->standard->height) ? $yt_playlist->snippet->thumbnails->standard->height : $yt_playlist->snippet->thumbnails->default->height
             ));
             $playlist->save();
             $request->session()->flash('status', 'Erfolgreich gespeichert!');

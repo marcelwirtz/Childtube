@@ -7,7 +7,7 @@
                 <div class="col-md-3" style="height: 350px;">
                     <div class="panel panel-default">
                         <div class="panel-body text-center">
-                            <a onclick="showVideo('{{$video->contentDetails->videoId}}');"><img src="{{$video->snippet->thumbnails->standard->url}}" style="cursor:pointer; width:100%; height: 100%; max-width: {{$video->snippet->thumbnails->standard->width}}px; max-height: {{$video->snippet->thumbnails->standard->height}}px;"></a>
+                            <a onclick="showVideo('{{$video->contentDetails->videoId}}');"><img src="{{ isset($video->snippet->thumbnails->standard->url) ? $video->snippet->thumbnails->standard->url : $video->snippet->thumbnails->default->url }}" style="cursor:pointer; width:100%; height: 100%; max-width: 328px; max-height: 246px;"></a>
                         </div>
                         <div class="panel-footer text-center"><a onclick="showVideo('{{$video->contentDetails->videoId}}');" style="cursor: pointer;">{{$video->snippet->title}}</a></div>
                     </div>
@@ -26,7 +26,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg" role="document" style="width: 80%; height: 80%;">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="embed-responsive embed-responsive-16by9">
@@ -34,15 +34,19 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Schlie&szlig;en</button>
+                    <button type="button" class="btn btn-danger" onclick="closeModal()">Schlie&szlig;en</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script type="text/javascript">
+        function closeModal() {
+            $("#videoFrame").attr("src", "");
+            $('#videoModal').modal('hide');
+        }
         function showVideo(videoId) {
-            $("#videoFrame").attr("src", "https://www.youtube.com/embed/"+ videoId + "?rel=0");
+            $("#videoFrame").attr("src", "https://www.youtube-nocookie.com/embed/"+ videoId + "?rel=0&modestbranding=1&fs=1");
             $('#videoModal').modal('show');
         }
     </script>
