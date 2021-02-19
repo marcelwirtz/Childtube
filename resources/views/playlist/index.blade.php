@@ -24,7 +24,10 @@
                                             <td align="left"><a href="#">{{ $playlist->name }}</a></td>
                                             <td align="left">{{ $playlist->playlist_id }}</td>
                                             <td align="left">{{ $playlist->number_of_videos }}</td>
-                                            <td align="right"><a class="right" href="{{ route('playlist.delete', ['playlist' => $playlist->id]) }}"><button class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+                                            <td align="right">
+                                                <a class="right" href="{{ route('playlist.videos', ['playlist' => $playlist->id]) }}"><button class="btn btn-sm btn-info"><span class="glyphicon glyphicon-film"></span></button></a>
+                                                <a class="right" href="{{ route('playlist.delete', ['playlist' => $playlist->id]) }}"><button class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>

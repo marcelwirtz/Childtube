@@ -23,4 +23,9 @@ Route::get('/playlist/create', 'PlaylistController@create')->name('playlist.crea
 Route::get('/playlist/{playlist}/delete', 'PlaylistController@destroy')->name('playlist.delete')->middleware('auth');
 Route::post('/playlist', 'PlaylistController@store')->name('playlist.store')->middleware('auth');
 
+Route::get('/playlist/{playlist}/videos', 'PlaylistController@videos')->name('playlist.videos')->middleware('auth');
+Route::post('/playlist/{playlist}/videos', 'PlaylistController@updateVideos')->name('playlist.updateVideos')->middleware('auth');
+
+Route::get('/video/{video}/delete', 'VideoController@destroy')->name('video.delete')->middleware('auth');
+
 Route::get('/home', 'HomeController@index');
