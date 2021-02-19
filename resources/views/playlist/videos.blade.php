@@ -78,7 +78,7 @@
                                         <tr>
                                             <td align="left"><a href="#">{{ $video->title }}</a></td>
                                             <td align="left">{{ $video->channel_title }}</td>
-                                            <td align="left"><input type="text" name="video[{{$video->id}}]" value="{{ $video->sort }}"/></td>
+                                            <td align="left"><input type="text" name="video[{{$video->id}}]" value="{{ $video->sort }}" style="width: 50px;" /></td>
                                             <td align="right">
                                                 <a class="right" href="{{ route('video.delete', ['video' => $video->id]) }}"><button class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a>
                                             </td>
