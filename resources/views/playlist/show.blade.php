@@ -12,7 +12,7 @@
                         <div class="panel-footer text-center"><a onclick="showVideo('{{ $video->video_id }}');" style="cursor: pointer;">{{ $video->title }}</a></div>
                     </div>
                 </div>
-                @if($key % 3 == 0)
+                @if($key > 0 && $key % 3 == 0)
                     </div>
                     <div class="row">
                 @endif
