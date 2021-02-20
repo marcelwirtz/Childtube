@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            @forelse($playlists AS $playlist)
+            @forelse($playlists AS $key => $playlist)
                 <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-body text-center">
@@ -11,9 +11,11 @@
                         </div>
                         <div class="panel-footer text-center"><a href="{{route("playlist.show", ['playlist' => $playlist->id])}}">{{$playlist->name}}</a></div>
                     </div>
-
-
                 </div>
+                @if($key % 3 == 0)
+                    </div>
+                    <div class="row">
+                @endif
             @empty
                 <div class="col-md-12 bg-info">Keine Playlists vorhanden!</div>
             @endforelse
