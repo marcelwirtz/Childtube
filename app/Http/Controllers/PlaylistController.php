@@ -50,6 +50,7 @@ class PlaylistController extends Controller
             $yt_playlist = Youtube::getPlaylistById($request->playlist_id_yt);
             if ($yt_playlist) {
                 $playlist->name = $yt_playlist->snippet->title;
+                $playlist->playlist_id_yt = $request->playlist_id_yt;
                 $playlist->thumbnail_path = isset($yt_playlist->snippet->thumbnails->standard->url) ? $yt_playlist->snippet->thumbnails->standard->url : $yt_playlist->snippet->thumbnails->default->url;
                 $playlist->thumbnail_width = isset($yt_playlist->snippet->thumbnails->standard->width) ? $yt_playlist->snippet->thumbnails->standard->width : $yt_playlist->snippet->thumbnails->default->width;
                 $playlist->thumbnail_height = isset($yt_playlist->snippet->thumbnails->standard->height) ? $yt_playlist->snippet->thumbnails->standard->height : $yt_playlist->snippet->thumbnails->default->height;
@@ -142,7 +143,7 @@ class PlaylistController extends Controller
 
     public function videos(Request $request, Playlist $playlist) {
         $videos = null;
-        if($request->has('q')) {
+        if($request->has('q') && !empty($request->q)) {
             $params = [
                 'q'                     => $request->q,
                 'type'                  => 'video',
@@ -152,6 +153,9 @@ class PlaylistController extends Controller
                 'maxResults'            => $request->maxResults
             ];
             $videos = Youtube::searchAdvanced($params);
+        } else if($request->has("video_id") && !empty($request->video_id)) {
+            $videoArr = explode(",", $request->video_id);
+            $videos = Youtube::getVideoInfo($videoArr);
         }
 
         return view('playlist.videos')->with([ 'playlist' => $playlist, 'videos' => $videos ]);

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Playlist extends Model
 {
-    protected $fillable = ['name' , 'playlist_id', 'number_of_videos', "thumbnail_path", "thumbnail_width", "thumbnail_height"];
+    protected $fillable = ['name' , 'playlist_id_yt', "thumbnail_path", "thumbnail_width", "thumbnail_height"];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

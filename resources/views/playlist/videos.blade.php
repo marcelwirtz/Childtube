@@ -20,7 +20,7 @@
                                 </tr>
                                 @forelse ($videos as $video)
                                     <tr>
-                                        <td align="left"><input type="checkbox" name="video[]" value="{{ $video->id->videoId }}" /></td>
+                                        <td align="left"><input type="checkbox" name="video[]" value="{{ isset($video->id->videoId) ? $video->id->videoId : $video->id }}" /></td>
                                         <td><img src="{{ $video->snippet->thumbnails->default->url }}" width="{{ $video->snippet->thumbnails->default->width }}" height="{{ $video->snippet->thumbnails->default->height }}" /></td>
                                         <td align="left">{{ $video->snippet->title }}</td>
                                         <td align="left">{{ $video->snippet->channelTitle }}</td>
@@ -37,6 +37,14 @@
                         </form>
                         @endif
                         <form action="{{ route('playlist.videos', $playlist) }}" method="get">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="video_id">Video ID:</label>
+                                        <input class="form-control" type="text" id="video_id" name="video_id" value="{{ old('video_id') }}" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -80,7 +88,7 @@
                                             <td align="left">{{ $video->channel_title }}</td>
                                             <td align="left"><input type="text" name="video[{{$video->id}}]" value="{{ $video->sort }}" style="width: 50px;" /></td>
                                             <td align="right">
-                                                <a class="right" href="{{ route('video.delete', ['video' => $video->id]) }}"><button class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                                <a class="right" href="{{ route('video.delete', ['video' => $video->id]) }}"><button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a>
                                             </td>
                                         </tr>
                                     @empty
