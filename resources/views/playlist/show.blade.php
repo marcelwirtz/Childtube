@@ -4,6 +4,10 @@
     <div class="container">
         <div class="row">
             @foreach($playlist->videos AS $key => $video)
+                @if($key > 0 && $key % 3 == 0)
+                    </div>
+                    <div class="row">
+                @endif
                 <div class="col-md-4" style="height: 350px;">
                     <div class="panel panel-default">
                         <div class="panel-body text-center">
@@ -12,10 +16,6 @@
                         <div class="panel-footer text-center"><a onclick="showVideo('{{ $video->video_id }}');" style="cursor: pointer;">{{ $video->title }}</a></div>
                     </div>
                 </div>
-                @if($key > 0 && $key % 3 == 0)
-                    </div>
-                    <div class="row">
-                @endif
             @endforeach
         </div>
     </div>
