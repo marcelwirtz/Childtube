@@ -49,28 +49,33 @@ class PlaylistController extends Controller
         if(!empty($request->playlist_id_yt)) {
             $yt_playlist = Youtube::getPlaylistById($request->playlist_id_yt);
             if ($yt_playlist) {
-                $playlistItems = Youtube::getPlaylistItemsByPlaylistId($request->playlist_id_yt);
-
                 $playlist->name = $yt_playlist->snippet->title;
                 $playlist->thumbnail_path = isset($yt_playlist->snippet->thumbnails->standard->url) ? $yt_playlist->snippet->thumbnails->standard->url : $yt_playlist->snippet->thumbnails->default->url;
                 $playlist->thumbnail_width = isset($yt_playlist->snippet->thumbnails->standard->width) ? $yt_playlist->snippet->thumbnails->standard->width : $yt_playlist->snippet->thumbnails->default->width;
                 $playlist->thumbnail_height = isset($yt_playlist->snippet->thumbnails->standard->height) ? $yt_playlist->snippet->thumbnails->standard->height : $yt_playlist->snippet->thumbnails->default->height;
                 $playlist->save();
 
-                foreach($playlistItems['results'] as $key => $item) {
-                    $video = new Video([
-                        'playlist_id' => $playlist->id,
-                        'video_id' => $item->snippet->resourceId->videoId,
-                        'title' => $item->snippet->title,
-                        'thumbnail_path' => isset($item->snippet->thumbnails->standard->url) ? $item->snippet->thumbnails->standard->url : $item->snippet->thumbnails->default->url,
-                        'thumbnail_width' => isset($item->snippet->thumbnails->standard->width) ? $item->snippet->thumbnails->standard->width : $item->snippet->thumbnails->default->width,
-                        'thumbnail_height' => isset($item->snippet->thumbnails->standard->height) ? $item->snippet->thumbnails->standard->height : $item->snippet->thumbnails->default->height,
-                        'channel_id' => $item->snippet->videoOwnerChannelId,
-                        'channel_title' => $item->snippet->videoOwnerChannelTitle,
-                        'sort' => $key
-                    ]);
-                    $video->save();
-                }
+                $nextPageToken = "";
+                $sort = 0;
+                do {
+                    $playlistItems = Youtube::getPlaylistItemsByPlaylistId($request->playlist_id_yt, $nextPageToken);
+                    $nextPageToken = $playlistItems['info']['nextPageToken'];
+                    foreach ($playlistItems['results'] as $key => $item) {
+                        $video = new Video([
+                            'playlist_id' => $playlist->id,
+                            'video_id' => $item->snippet->resourceId->videoId,
+                            'title' => $item->snippet->title,
+                            'thumbnail_path' => isset($item->snippet->thumbnails->standard->url) ? $item->snippet->thumbnails->standard->url : $item->snippet->thumbnails->default->url,
+                            'thumbnail_width' => isset($item->snippet->thumbnails->standard->width) ? $item->snippet->thumbnails->standard->width : $item->snippet->thumbnails->default->width,
+                            'thumbnail_height' => isset($item->snippet->thumbnails->standard->height) ? $item->snippet->thumbnails->standard->height : $item->snippet->thumbnails->default->height,
+                            'channel_id' => $item->snippet->videoOwnerChannelId,
+                            'channel_title' => $item->snippet->videoOwnerChannelTitle,
+                            'sort' => $sort
+                        ]);
+                        $video->save();
+                        $sort++;
+                    }
+                } while($nextPageToken !== false);
             }
         }
 
