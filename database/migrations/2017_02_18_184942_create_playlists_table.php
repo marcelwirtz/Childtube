@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreatePlaylistsTable extends Migration
 {
@@ -14,12 +14,12 @@ class CreatePlaylistsTable extends Migration
     public function up()
     {
         Schema::create('playlists', function (Blueprint $table) {
-            $table->id("id");
-            $table->string("name");
-            $table->string("playlist_id_yt")->nullable();
-            $table->string("thumbnail_path")->nullable();
-            $table->integer("thumbnail_width")->nullable();
-            $table->integer("thumbnail_height")->nullable();
+            $table->id('id');
+            $table->string('name');
+            $table->string('playlist_id_yt')->nullable();
+            $table->string('thumbnail_path')->nullable();
+            $table->integer('thumbnail_width')->nullable();
+            $table->integer('thumbnail_height')->nullable();
             $table->timestamps();
         });
     }

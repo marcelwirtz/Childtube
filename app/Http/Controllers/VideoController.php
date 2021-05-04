@@ -81,6 +81,7 @@ class VideoController extends Controller
     public function destroy(Video $video)
     {
         $video->delete();
+
         return redirect()->back();
     }
 }

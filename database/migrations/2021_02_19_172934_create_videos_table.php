@@ -23,7 +23,7 @@ class CreateVideosTable extends Migration
             $table->integer('thumbnail_height');
             $table->string('channel_id');
             $table->string('channel_title');
-            $table->integer("sort");
+            $table->integer('sort');
             $table->timestamps();
 
             $table->foreign('playlist_id')->references('id')->on('playlists')->onDelete('cascade');

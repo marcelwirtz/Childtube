@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\RefreshPlaylistVideos::class
+        Commands\RefreshPlaylistVideos::class,
     ];
 
     /**
