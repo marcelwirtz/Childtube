@@ -37,13 +37,13 @@ class PlaylistController extends Controller
      */
     public function store(Request $request)
     {
-        $playlist = new Playlist(array(
+        $playlist = new Playlist([
             'name' => $request->name,
             'playlist_id_yt' => $request->playlist_id_yt,
             'thumbnail_path' => $request->thumbnail_path,
             'thumbnail_width' => $request->thumbnail_width,
             'thumbnail_height' => $request->thumbnail_height
-        ));
+        ]);
         $playlist->save();
 
         if(!empty($request->playlist_id_yt)) {
