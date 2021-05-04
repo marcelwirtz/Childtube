@@ -40,16 +40,15 @@ class RefreshPlaylistVideos extends Command
      */
     public function handle()
     {
-        $playlists = Playlist::whereNotNull("playlist_id_yt")->get();
-        foreach($playlists as $playlist) {
-            if(!empty($playlist->playlist_id_yt)) {
-                $nextPageToken = "";
+        $playlists = Playlist::whereNotNull('playlist_id_yt')->get();
+        foreach ($playlists as $playlist) {
+            if (! empty($playlist->playlist_id_yt)) {
+                $nextPageToken = '';
                 $sort = 0;
                 do {
                     $playlistItems = Youtube::getPlaylistItemsByPlaylistId($playlist->playlist_id_yt, $nextPageToken);
                     $nextPageToken = $playlistItems['info']['nextPageToken'];
                     foreach ($playlistItems['results'] as $key => $item) {
-
                         $video = Video::firstOrCreate([
                             'playlist_id' => $playlist->id,
                             'video_id' => $item->snippet->resourceId->videoId,
@@ -59,14 +58,15 @@ class RefreshPlaylistVideos extends Command
                             'thumbnail_height' => isset($item->snippet->thumbnails->standard->height) ? $item->snippet->thumbnails->standard->height : $item->snippet->thumbnails->default->height,
                             'channel_id' => $item->snippet->videoOwnerChannelId,
                             'channel_title' => $item->snippet->videoOwnerChannelTitle,
-                            'sort' => $sort
+                            'sort' => $sort,
                         ]);
                         $video->save();
                         $sort++;
                     }
-                } while($nextPageToken !== false);
+                } while ($nextPageToken !== false);
             }
         }
+
         return 0;
     }
 }
